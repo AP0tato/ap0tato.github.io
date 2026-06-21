@@ -1,0 +1,33 @@
+{
+  "githubUsername": "AP0tato",
+  "name": "Ali Abid",
+  "tagline": "Software & systems developer — embedded, ML, and full-stack projects.",
+  "bio": "I build things across the stack: from C/C++ engines and embedded hardware to Python ML and React apps. Below are some of my public projects, pulled live from GitHub.",
+  "links": {
+    "github": "https://github.com/AP0tato",
+    "email": "aliabid0207@gmail.com"
+  },
+  "exclude": [
+    "ap0tato.github.io",
+    "Ap0tato",
+    "introduction-to-github",
+    "skills-introduction-to-github",
+    "Webdev",
+    "java-cpp"
+  ],
+  "descriptions": {
+    "Bionic-Arm": "Python control code for a bionic/prosthetic arm.",
+    "NeuralNetwork": "A feedforward neural network library written in C++ with a Python (ctypes) interface.",
+    "Sentry-Node": "A Python-based sentry node application.",
+    "physics_sim": "A 2D physics simulation written in C.",
+    "chess_project": "A chess engine in C that parses move sequences and validates them against the rules of chess (APSC 143 final project).",
+    "Athabasca": "A Java Swing desktop app for managing clients, assignments, and employees, backed by Firebase Realtime Database.",
+    "Budget": "A React budget-management app with interactive tables and Recharts-powered charts.",
+    "Calc": "A C++ calculator engine that tokenizes and evaluates expressions and solves equations using the Shunting Yard algorithm.",
+    "Hackathon": "Culminating Time — a Tkinter student-life simulation game where daily choices affect stress, health, and exam readiness.",
+    "HABS": "Hospital Appointment Booking System built with Python and PySide6 — accounts, symptom-based booking, and a calendar view.",
+    "Leet": "C++ solutions to LeetCode problems, organized by number and difficulty.",
+    "MREN178_Project_2": "A C++/wxWidgets project implementing graph pathfinding (MREN 178).",
+    "mren178": "A C++ project for the MREN 178 course."
+  }
+}
