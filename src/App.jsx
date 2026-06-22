@@ -128,17 +128,45 @@ function Prompt() {
 
 // Renders the output for a single entered command. Kept pure so the terminal
 // can re-render lines live (e.g. `ls` updates once projects finish loading).
+function findProject(projects, arg) {
+  if (!projects || !arg) return null
+  const target = arg.replace(/\/$/, '').toLowerCase()
+  return projects.find((p) => p.name.toLowerCase() === target) || null
+}
+
 function CommandOutput({ cmd, projects }) {
-  const name = cmd.split(/\s+/)[0]
+  const [name, ...rest] = cmd.split(/\s+/)
+  const arg = rest.join(' ')
 
   if (name === 'help') {
     return (
       <div className="term-out">
         Available commands:{'\n'}
-        {'  '}whoami   — about me{'\n'}
-        {'  '}ls       — list my GitHub projects{'\n'}
-        {'  '}clear    — clear the terminal{'\n'}
-        {'  '}help     — show this message
+        {'  '}whoami     — about me{'\n'}
+        {'  '}ls         — list my GitHub projects{'\n'}
+        {'  '}cd &lt;name&gt;  — open a project in a new tab{'\n'}
+        {'  '}clear      — clear the terminal{'\n'}
+        {'  '}help       — show this message
+      </div>
+    )
+  }
+
+  if (name === 'cd') {
+    if (!arg) return <div className="term-out term-err">cd: missing operand</div>
+    if (projects === null) return <div className="term-out">fetching projects…</div>
+    const project = findProject(projects, arg)
+    if (!project) {
+      return (
+        <div className="term-out term-err">cd: no such project: {arg}</div>
+      )
+    }
+    return (
+      <div className="term-out">
+        opening{' '}
+        <a className="term-link" href={project.html_url} target="_blank" rel="noreferrer">
+          {project.name}/
+        </a>{' '}
+        …
       </div>
     )
   }
@@ -199,6 +227,13 @@ function HomePage() {
     if (cmd === 'clear') {
       setHistory([])
       return
+    }
+    const [name, ...rest] = cmd.split(/\s+/)
+    if (name === 'cd') {
+      const project = findProject(projects, rest.join(' '))
+      if (project) {
+        window.open(project.html_url, '_blank', 'noopener,noreferrer')
+      }
     }
     setHistory((h) => [...h, cmd])
   }
