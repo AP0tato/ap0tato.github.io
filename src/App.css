@@ -77,6 +77,21 @@ main {
   transform: translateY(-3px);
 }
 
+.card-thumb {
+  margin: -1.25rem -1.25rem 1rem;
+  border-bottom: 1px solid var(--border);
+  border-radius: 12px 12px 0 0;
+  overflow: hidden;
+  background: var(--card);
+}
+
+.card-thumb img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
 .card h3 {
   margin: 0 0 0.5rem;
   font-size: 1.1rem;

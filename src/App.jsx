@@ -17,6 +17,44 @@ function describe(repo) {
   return config.descriptions[repo.name] || repo.description || ''
 }
 
+// Candidate locations for a per-repo thumbnail, in priority order. The repo
+// owner drops a `thumbnail.<ext>` (optionally inside a `thumbnail/` folder)
+// into each project; we try each until one loads.
+function thumbnailCandidates(repo) {
+  const branch = repo.default_branch || 'main'
+  const base = `https://raw.githubusercontent.com/${config.githubUsername}/${repo.name}/${branch}`
+  const paths = [
+    'thumbnail.png',
+    'thumbnail.jpg',
+    'thumbnail.jpeg',
+    'thumbnail/thumbnail.png',
+    'thumbnail/thumbnail.jpg',
+    'thumbnail/thumbnail.jpeg',
+  ]
+  return paths.map((p) => `${base}/${p}`)
+}
+
+function Thumbnail({ repo }) {
+  const candidates = thumbnailCandidates(repo)
+  const [index, setIndex] = useState(0)
+
+  // Reset when the repo changes (candidates are keyed off repo name/branch).
+  useEffect(() => setIndex(0), [repo.name])
+
+  if (index >= candidates.length) return null
+
+  return (
+    <div className="card-thumb">
+      <img
+        src={candidates[index]}
+        alt={`${repo.name} thumbnail`}
+        loading="lazy"
+        onError={() => setIndex((i) => i + 1)}
+      />
+    </div>
+  )
+}
+
 // Fallback project list built from the curated JSON, used if the
 // GitHub API is unreachable or rate-limited.
 function fallbackProjects() {
@@ -26,6 +64,7 @@ function fallbackProjects() {
     html_url: `https://github.com/${config.githubUsername}/${name}`,
     language: null,
     stargazers_count: 0,
+    default_branch: 'main',
   }))
 }
 
@@ -33,6 +72,7 @@ function ProjectCard({ repo }) {
   const description = describe(repo)
   return (
     <a className="card" href={repo.html_url} target="_blank" rel="noreferrer">
+      <Thumbnail repo={repo} />
       <h3>{repo.name}</h3>
       {description && <p>{description}</p>}
       <div className="card-meta">
