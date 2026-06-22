@@ -5,7 +5,12 @@
   "bio": "I build things across the stack: from C/C++ engines and embedded hardware to Python ML and React apps. Below are some of my public projects, pulled live from GitHub.",
   "links": {
     "github": "https://github.com/AP0tato",
+    "linkedin": "https://www.linkedin.com/in/ali-abid-a162362b6/",
     "email": "aliabid0207@gmail.com"
+  },
+  "resumes": {
+    "software": "Ali-Abid-Resume-Software.pdf",
+    "embedded": "Ali-Abid-Resume-Embedded.pdf"
   },
   "exclude": [
     "ap0tato.github.io",

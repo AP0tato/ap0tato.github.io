@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import config from './projects.json'
 import './App.css'
 
@@ -116,20 +116,144 @@ function Nav({ route }) {
   )
 }
 
-function HomePage() {
+function Prompt() {
   return (
-    <section className="placeholder">
-      <h1>{config.name}</h1>
-      <p className="tagline">{config.tagline}</p>
-      <p className="bio">Coming soon.</p>
-      <div className="hero-links">
-        <a href="#/projects">View projects</a>
+    <span className="term-ps1">
+      <span className="ps1-user">ali</span>@
+      <span className="ps1-host">portfolio</span>
+      <span className="ps1-path">:~$</span>
+    </span>
+  )
+}
+
+// Renders the output for a single entered command. Kept pure so the terminal
+// can re-render lines live (e.g. `ls` updates once projects finish loading).
+function CommandOutput({ cmd, projects }) {
+  const name = cmd.split(/\s+/)[0]
+
+  if (name === 'help') {
+    return (
+      <div className="term-out">
+        Available commands:{'\n'}
+        {'  '}whoami   — about me{'\n'}
+        {'  '}ls       — list my GitHub projects{'\n'}
+        {'  '}clear    — clear the terminal{'\n'}
+        {'  '}help     — show this message
+      </div>
+    )
+  }
+
+  if (name === 'whoami') {
+    return (
+      <div className="term-out">
+        {config.name}{'\n'}
+        {config.tagline}
+        {'\n\n'}
+        {config.bio}
+      </div>
+    )
+  }
+
+  if (name === 'ls') {
+    if (projects === null) return <div className="term-out">fetching projects…</div>
+    return (
+      <div className="term-ls">
+        {projects.map((p) => (
+          <a
+            key={p.name}
+            className="term-link"
+            href={p.html_url}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {p.name}/
+          </a>
+        ))}
+      </div>
+    )
+  }
+
+  return (
+    <div className="term-out term-err">
+      command not found: {name} — type <span className="term-hint">help</span>
+    </div>
+  )
+}
+
+function HomePage() {
+  const { projects } = useProjects()
+  const [history, setHistory] = useState([])
+  const [input, setInput] = useState('')
+  const inputRef = useRef(null)
+  const endRef = useRef(null)
+
+  useEffect(() => {
+    endRef.current?.scrollIntoView({ block: 'nearest' })
+  }, [history, projects])
+
+  const submit = (e) => {
+    e.preventDefault()
+    const cmd = input.trim()
+    setInput('')
+    if (!cmd) return
+    if (cmd === 'clear') {
+      setHistory([])
+      return
+    }
+    setHistory((h) => [...h, cmd])
+  }
+
+  return (
+    <section
+      className="terminal"
+      onClick={() => inputRef.current?.focus()}
+    >
+      <div className="term-bar">
+        <span className="term-dot red" />
+        <span className="term-dot yellow" />
+        <span className="term-dot green" />
+        <span className="term-title">{config.name.toLowerCase().replace(/\s+/g, '')}@portfolio: ~</span>
+      </div>
+
+      <div className="term-body">
+        <div className="term-intro">
+          Welcome to {config.name}&apos;s shell.{'\n'}
+          Type <span className="term-hint">help</span> to get started, or{' '}
+          <span className="term-hint">ls</span> to see my projects.
+        </div>
+
+        {history.map((cmd, i) => (
+          <div key={i} className="term-entry">
+            <div className="term-cmd-line">
+              <Prompt />
+              <span className="term-cmd">{cmd}</span>
+            </div>
+            <CommandOutput cmd={cmd} projects={projects} />
+          </div>
+        ))}
+
+        <form className="term-cmd-line" onSubmit={submit}>
+          <Prompt />
+          <input
+            ref={inputRef}
+            className="term-input"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            spellCheck="false"
+            autoComplete="off"
+            autoFocus
+            aria-label="terminal input"
+          />
+        </form>
+        <div ref={endRef} />
       </div>
     </section>
   )
 }
 
-function ProjectsPage() {
+// Fetches the curated, sorted list of public GitHub repos. Shared by the
+// terminal `ls` command and the Projects grid. Returns null while loading.
+function useProjects() {
   const [projects, setProjects] = useState(null)
   const [error, setError] = useState(false)
 
@@ -152,6 +276,12 @@ function ProjectsPage() {
         setProjects(fallbackProjects())
       })
   }, [])
+
+  return { projects, error }
+}
+
+function ProjectsPage() {
+  const { projects, error } = useProjects()
 
   return (
     <section className="projects">

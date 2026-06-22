@@ -26,31 +26,131 @@ main {
   font-weight: 500;
 }
 
-.placeholder {
-  min-height: 50vh;
+/* ---- Terminal homepage ---- */
+.terminal {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #0a0e14;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.92rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+  cursor: text;
+}
+
+.term-bar {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.85rem;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
 }
 
-.placeholder h1 {
-  font-size: clamp(2.2rem, 6vw, 3.4rem);
-  line-height: 1.05;
-  margin: 0 0 0.5rem;
-  letter-spacing: -0.02em;
+.term-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
 }
 
-.placeholder .tagline {
-  font-size: 1.15rem;
-  color: var(--accent);
-  margin: 0 0 1rem;
-  font-weight: 500;
+.term-dot.red {
+  background: #ff5f56;
+}
+.term-dot.yellow {
+  background: #ffbd2e;
+}
+.term-dot.green {
+  background: #27c93f;
 }
 
-.placeholder .bio {
+.term-title {
+  margin-left: 0.5rem;
   color: var(--muted);
-  max-width: 60ch;
-  margin: 0 0 1.5rem;
+  font-size: 0.8rem;
+}
+
+.term-body {
+  padding: 1rem 1.1rem 1.25rem;
+  min-height: 320px;
+  max-height: 60vh;
+  overflow-y: auto;
+  line-height: 1.6;
+}
+
+.term-intro {
+  color: var(--muted);
+  white-space: pre-wrap;
+  margin-bottom: 0.75rem;
+}
+
+.term-entry {
+  margin-bottom: 0.25rem;
+}
+
+.term-cmd-line {
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+}
+
+.term-ps1 {
+  white-space: nowrap;
+}
+
+.ps1-user {
+  color: #27c93f;
+}
+.ps1-host {
+  color: #27c93f;
+}
+.ps1-path {
+  color: var(--accent);
+}
+
+.term-cmd {
+  color: var(--text);
+}
+
+.term-out {
+  white-space: pre-wrap;
+  color: var(--text);
+  margin: 0.15rem 0 0.6rem;
+}
+
+.term-err {
+  color: #ff6b6b;
+}
+
+.term-hint {
+  color: var(--accent);
+}
+
+.term-ls {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.1rem 1.5rem;
+  margin: 0.15rem 0 0.6rem;
+}
+
+.term-link {
+  color: var(--accent);
+}
+
+.term-link:hover {
+  text-decoration: underline;
+}
+
+.term-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0;
+  caret-color: var(--accent);
 }
 
 .hero {
