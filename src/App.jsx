@@ -38,9 +38,6 @@ function Thumbnail({ repo }) {
   const candidates = thumbnailCandidates(repo)
   const [index, setIndex] = useState(0)
 
-  // Reset when the repo changes (candidates are keyed off repo name/branch).
-  useEffect(() => setIndex(0), [repo.name])
-
   if (index >= candidates.length) return null
 
   return (
@@ -93,7 +90,46 @@ function ProjectCard({ repo }) {
   )
 }
 
-function App() {
+// Minimal hash-based router. Hash routing avoids the GitHub Pages
+// client-routing 404 problem (no server rewrite needed) — links like
+// `#/projects` resolve entirely in the browser.
+function useHashRoute() {
+  const [hash, setHash] = useState(() => window.location.hash || '#/')
+  useEffect(() => {
+    const onChange = () => setHash(window.location.hash || '#/')
+    window.addEventListener('hashchange', onChange)
+    return () => window.removeEventListener('hashchange', onChange)
+  }, [])
+  return hash.replace(/^#/, '') || '/'
+}
+
+function Nav({ route }) {
+  return (
+    <nav className="nav">
+      <a className={route === '/' ? 'active' : ''} href="#/">
+        Home
+      </a>
+      <a className={route === '/projects' ? 'active' : ''} href="#/projects">
+        Projects
+      </a>
+    </nav>
+  )
+}
+
+function HomePage() {
+  return (
+    <section className="placeholder">
+      <h1>{config.name}</h1>
+      <p className="tagline">{config.tagline}</p>
+      <p className="bio">Coming soon.</p>
+      <div className="hero-links">
+        <a href="#/projects">View projects</a>
+      </div>
+    </section>
+  )
+}
+
+function ProjectsPage() {
   const [projects, setProjects] = useState(null)
   const [error, setError] = useState(false)
 
@@ -118,36 +154,34 @@ function App() {
   }, [])
 
   return (
-    <main>
-      <header className="hero">
-        <h1>{config.name}</h1>
-        <p className="tagline">{config.tagline}</p>
-        <p className="bio">{config.bio}</p>
-        <div className="hero-links">
-          <a href={config.links.github} target="_blank" rel="noreferrer">
-            GitHub
-          </a>
-          <a href={`mailto:${config.links.email}`}>Email</a>
+    <section className="projects">
+      <h2>Projects</h2>
+      {error && (
+        <p className="notice">
+          Couldn&apos;t reach the GitHub API right now — showing a saved list.
+        </p>
+      )}
+      {projects === null ? (
+        <p className="notice">Loading projects…</p>
+      ) : (
+        <div className="grid">
+          {projects.map((repo) => (
+            <ProjectCard key={repo.name} repo={repo} />
+          ))}
         </div>
-      </header>
+      )}
+    </section>
+  )
+}
 
-      <section className="projects">
-        <h2>Projects</h2>
-        {error && (
-          <p className="notice">
-            Couldn&apos;t reach the GitHub API right now — showing a saved list.
-          </p>
-        )}
-        {projects === null ? (
-          <p className="notice">Loading projects…</p>
-        ) : (
-          <div className="grid">
-            {projects.map((repo) => (
-              <ProjectCard key={repo.name} repo={repo} />
-            ))}
-          </div>
-        )}
-      </section>
+function App() {
+  const route = useHashRoute()
+
+  return (
+    <main>
+      <Nav route={route} />
+
+      {route === '/projects' ? <ProjectsPage /> : <HomePage />}
 
       <footer>
         <p>

@@ -4,6 +4,55 @@ main {
   padding: 4rem 1.5rem 3rem;
 }
 
+.nav {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+  font-size: 0.95rem;
+}
+
+.nav a {
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav a:hover {
+  color: var(--text);
+}
+
+.nav a.active {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.placeholder {
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.placeholder h1 {
+  font-size: clamp(2.2rem, 6vw, 3.4rem);
+  line-height: 1.05;
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.placeholder .tagline {
+  font-size: 1.15rem;
+  color: var(--accent);
+  margin: 0 0 1rem;
+  font-weight: 500;
+}
+
+.placeholder .bio {
+  color: var(--muted);
+  max-width: 60ch;
+  margin: 0 0 1.5rem;
+}
+
 .hero {
   margin-bottom: 3.5rem;
 }
