@@ -31,6 +31,7 @@
     "HABS": "Hospital Appointment Booking System built with Python and PySide6 — accounts, symptom-based booking, and a calendar view.",
     "Leet": "C++ solutions to LeetCode problems, organized by number and difficulty.",
     "MREN178_Project_2": "A C++/wxWidgets project implementing graph pathfinding (MREN 178).",
-    "mren178": "A C++ project for the MREN 178 course."
+    "mren178": "A C++ project for the MREN 178 course.",
+    "fundraiser-app": "Simple app to help keep track of total amounts pledged"
   }
 }
