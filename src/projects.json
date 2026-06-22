@@ -21,12 +21,12 @@
     "java-cpp",
     "Hackathon",
     "Calc",
-    "mren178"
+    "mren178",
+    "Sentry-Node"
   ],
   "descriptions": {
     "Bionic-Arm": "Python control code for a bionic/prosthetic arm.",
     "NeuralNetwork": "A feedforward neural network library written in C++ with a Python (ctypes) interface.",
-    "Sentry-Node": "A Python-based sentry node application.",
     "physics_sim": "A 2D/3D physics simulation written in C.",
     "chess_project": "A chess engine in C that parses move sequences and validates them against the rules of chess (APSC 143 final project).",
     "Athabasca": "A Java Swing desktop app for managing clients, assignments, and employees, backed by Firebase Realtime Database.",
