@@ -178,6 +178,16 @@ function CommandOutput({ cmd, projects }) {
         {config.tagline}
         {'\n\n'}
         {config.bio}
+        {'\n\n'}
+        {'GitHub:   '}
+        <a className="term-link" href={config.links.github} target="_blank" rel="noreferrer">
+          {config.links.github}
+        </a>
+        {'\n'}
+        {'LinkedIn: '}
+        <a className="term-link" href={config.links.linkedin} target="_blank" rel="noreferrer">
+          {config.links.linkedin}
+        </a>
       </div>
     )
   }
