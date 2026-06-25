@@ -22,7 +22,8 @@
     "Hackathon",
     "Calc",
     "mren178",
-    "Sentry-Node"
+    "Sentry-Node",
+    "Bionic-Arm"
   ],
   "descriptions": {
     "Bionic-Arm": "Python control code for a bionic/prosthetic arm.",
