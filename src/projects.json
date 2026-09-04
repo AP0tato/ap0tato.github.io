@@ -1,10 +1,10 @@
 {
-  "githubUsername": "AP0tato",
+  "githubUsername": "aliabid0207",
   "name": "Ali Abid",
   "tagline": "Software & systems developer — embedded, ML, and full-stack projects.",
   "bio": "I build things across the stack: from C/C++ engines and embedded hardware to Python ML and React apps. Below are some of my public projects, pulled live from GitHub.",
   "links": {
-    "github": "https://github.com/AP0tato",
+    "github": "https://github.com/aliabid0207",
     "linkedin": "https://www.linkedin.com/in/ali-abid-a162362b6/",
     "email": "aliabid0207@gmail.com"
   },
@@ -13,7 +13,7 @@
     "embedded": "Ali-Abid-Resume-Embedded.pdf"
   },
   "exclude": [
-    "ap0tato.github.io",
+    "aliabid0207.github.io",
     "Ap0tato",
     "introduction-to-github",
     "skills-introduction-to-github",
